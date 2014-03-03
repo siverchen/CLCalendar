@@ -16,6 +16,8 @@
 
 @interface CLMonthView ()
 
+@property (nonatomic, strong) NSMutableArray *dayViews;
+
 
 @end
 
@@ -27,15 +29,17 @@
     self = [super initWithFrame:frame];
     if (self) {
         _date = date;
+        self.dayViews = [NSMutableArray array];
         [self drawDates];
     }
     return self;
 }
 
 - (void)drawDates{
-    for (UIView *view in [self subviews]){
+    for (CLDayView *view in [self dayViews]){
         [view removeFromSuperview];
     }
+    [self.dayViews removeAllObjects];
     int weekDay = (int)[self.date weekDay];
     float left = (weekDay - 1) * CL_DAYVIEW_WIDTH;
     float top = 0;
@@ -51,6 +55,15 @@
         date = [NSDate dateWithTimeInterval:24 * 60 * 60 sinceDate:date] ;
         [self addSubview:dayView];
         left += CL_DAYVIEW_WIDTH;
+        [self.dayViews addObject:dayView];
+    }
+}
+
+- (void)selectDate:(NSDate *)date{
+    for (CLDayView *dayView in [self dayViews]){
+        if ([CLDateManager Date:date isSameDayWithDate:dayView.date]){
+            [dayView setBackgroundColor:CLRGBA(157, 195, 231, 1)];
+        }
     }
 }
 

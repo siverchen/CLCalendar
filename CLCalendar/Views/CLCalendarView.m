@@ -9,6 +9,9 @@
 #import "CLCalendarView.h"
 #import "CLCalendarHeaderView.h"
 #import "CLConveyorView.h"
+#import "CLMonthView.h"
+#import "NSDate+Extern.h"
+#import "CLDateManager.h"
 
 @interface CLCalendarView () <CLConveyorViewDelegate>
 
@@ -20,6 +23,8 @@
 
 
 @implementation CLCalendarView
+
+@synthesize date = _date;
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -44,8 +49,26 @@
         [self.conveyorView setDelegate:self];
         [self addSubview:_conveyorView];
         
+        _date = date;
+        
     }
     return self;
+}
+
+- (void)selectDate:(CLDate)date{
+    NSDate *sdate = [CLDateManager NSDateFromCLDate:date];
+    [self.headerView setDate:sdate];
+    [self.conveyorView selectDate:sdate];
+}
+
+- (CLDate)current{
+    CLDate date = (CLDate){
+        self.date.year,
+        self.date.month,
+        self.date.day,
+        self.date.weekDay
+    };
+    return date;
 }
 
 

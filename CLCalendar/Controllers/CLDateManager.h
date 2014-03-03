@@ -26,5 +26,7 @@
 + (BOOL)Date:(NSDate *)sdate
 isSameDayWithDate:(NSDate *)date;
 
++ (NSDate *)NSDateFromCLDate:(CLDate)date;
+
 
 @end

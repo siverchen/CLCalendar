@@ -17,6 +17,8 @@
 
 - (void)setCenterDate:(NSDate *)date;
 
+- (void)selectDate:(NSDate *)date;
+
 @end
 
 @protocol CLConveyorViewDelegate <NSObject>

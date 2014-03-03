@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+UIKIT_EXTERN NSString *NSStringFromCLDate(CLDate date);
+
 @interface NSDate (Extern)
 
 

@@ -44,15 +44,25 @@
         [self.scrollView setContentOffset:(CGPoint){self.frame.size.width, 0}];
         [self.scrollView setBounces:NO];
         [self.scrollView setDelegate:self];
+        _calendarViews[0] = _calendarViews[1] = _calendarViews[2] = nil;
         [self addSubview:_scrollView];
-        
         [self setCenterDate:date];
     }
     return self;
 }
 
+- (void)clearView:(int)index{
+    if (_calendarViews[index]){
+        [_calendarViews[index] removeFromSuperview];
+        _calendarViews[index] = nil;
+    }
+}
+
 - (void)setCenterDate:(NSDate *)date{
     
+    [self clearView:0];
+    [self clearView:1];
+    [self clearView:2];
     //初始化左侧的月份
     NSDate *lastMonth = [CLDateManager lastMonth:date];
     CLMonthView *leftView = [[CLMonthView alloc] initWithDate:lastMonth andFrame:self.bounds];
@@ -75,6 +85,11 @@
     [rightView setFrame:(CGRect){{self.frame.size.width * 2, 0},self.frame.size}];
     _calendarViews[2] = rightView;
     rightView.date = nextMonth;
+}
+
+- (void)selectDate:(NSDate *)date{
+    [self setCenterDate:date];
+    [_calendarViews[1] selectDate:date];
 }
 
 - (void)resetPosition:(int)dir{

@@ -10,6 +10,7 @@
 #import "CLMonthView.h"
 #import "CLDateManager.h"
 #import "CLCalendarView.h"
+#import "NSDate+Extern.h"
 
 @interface CLViewController ()
 
@@ -22,6 +23,7 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
+
     }
     return self;
 }
@@ -29,9 +31,13 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+
     CLCalendarView *calendarView = [[CLCalendarView alloc] initWithDate:[NSDate date] andFrame:self.view.bounds];
     [self.view addSubview:calendarView];
+    
+    
+    
+    [calendarView selectDate:(CLDate){2011,10,1,0}];
     
 	// Do any additional setup after loading the view.
 }

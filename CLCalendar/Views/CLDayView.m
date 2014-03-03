@@ -29,6 +29,7 @@
         [self addSubview:label];
         [label setText:[NSString stringWithFormat:@"%ld", date.day]];
         [label setTextAlignment:NSTextAlignmentCenter];
+        [label setBackgroundColor:[UIColor clearColor]];
         if ([CLDateManager Date:date isSameDayWithDate:[NSDate date]]){
             [label setTextColor:[UIColor redColor]];
         }

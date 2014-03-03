@@ -115,7 +115,6 @@
 + (BOOL)Date:(NSDate *)sdate isSameDayWithDate:(NSDate *)date{
     
     NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
-        calendar.locale = [[NSLocale alloc] initWithLocaleIdentifier:@"zh_CN"];
     NSUInteger unitFlags = NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit;
     
     NSDateComponents *scomponents = [calendar components:unitFlags fromDate:sdate];
@@ -131,6 +130,17 @@
     
     return  [[calendar dateFromComponents:components] timeIntervalSince1970] == [[calendar dateFromComponents:scomponents] timeIntervalSince1970];
 
+}
+
+
++ (NSDate *)NSDateFromCLDate:(CLDate)date{
+    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+    NSDateComponents *components = [[NSDateComponents alloc] init];
+    [components setYear:date.year];
+    [components setMonth:date.month];
+    [components setDay:date.day];
+    return [calendar dateFromComponents:components];
+    
 }
 
 

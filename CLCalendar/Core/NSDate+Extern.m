@@ -8,9 +8,12 @@
 
 #import "NSDate+Extern.h"
 
+
+NSString *NSStringFromCLDate(CLDate date){
+    return [NSString stringWithFormat:@"\n{\nyear : %lu, \nmonth : %lu, \nday : %lu, \nweekday : %lu \n}", date.year, date.month, date.day, date.weekday];
+}
+
 @implementation NSDate (Extern)
-
-
 
 - (NSInteger)year{
     NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
@@ -20,7 +23,6 @@
 }
 
 - (NSInteger)month{
-    
     NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
     NSUInteger unitFlags = NSMonthCalendarUnit;
     NSDateComponents *components = [calendar components:unitFlags fromDate:self];

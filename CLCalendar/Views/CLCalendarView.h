@@ -7,7 +7,6 @@
 //
 
 #import "CLCalendarBaseView.h"
-#import "CLMonthView.h"
 
 
 #define CL_HEADERVIEW_HEIGHT 30
@@ -17,11 +16,30 @@
 
 @interface CLCalendarView : CLCalendarBaseView
 
+/**
+ *	@brief	获取当前显示的日期
+ *
+ *	@return	NSDate date
+ */
+- (CLDate)current;
+
+/**
+ *	@brief	选择目标日期
+ *
+ *	@param 	date 	目标日期: Year, month, day, weekday
+ */
+- (void)selectDate:(CLDate)date;
+
+
+
+
+
 
 @end
 
 @protocol CLCalendarViewDelegate <NSObject>
 
-
+- (void)calendarView:(CLCalendarView *)calendarView
+      didSelectedDay:(CLDate)date;
 
 @end

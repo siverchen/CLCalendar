@@ -58,6 +58,7 @@
 		A76CF37F18C0AAE100667C1F /* CLCalendarBaseView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLCalendarBaseView.m; sourceTree = "<group>"; };
 		A76CF38118C2D6AC00667C1F /* CLCalendarHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLCalendarHeaderView.h; sourceTree = "<group>"; };
 		A76CF38218C2D6AC00667C1F /* CLCalendarHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLCalendarHeaderView.m; sourceTree = "<group>"; };
+		A78CFBDC18C4717200156C32 /* CLCommonDefine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CLCommonDefine.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -179,6 +180,7 @@
 			children = (
 				A76CF36918C0497400667C1F /* CLDateManager.h */,
 				A76CF36A18C0497400667C1F /* CLDateManager.m */,
+				A78CFBDC18C4717200156C32 /* CLCommonDefine.h */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";

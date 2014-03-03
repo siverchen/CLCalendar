@@ -11,5 +11,6 @@
 
 @interface CLMonthView : CLCalendarBaseView
 
+- (void)selectDate:(NSDate *)date;
 
 @end
