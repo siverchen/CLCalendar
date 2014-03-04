@@ -10,9 +10,11 @@
 #import "CLDateManager.h"
 #import "NSDate+Extern.h"
 
-@interface CLDayView ()
+@interface CLDayView () {
+    NSString * _festival;
+}
 
-@property (nonatomic, strong) UILabel *chineseLabel;
+@property (nonatomic, strong) UILabel *detailLabel;
 
 @end
 
@@ -39,29 +41,41 @@
         if ([CLDateManager Date:date isSameDayWithDate:[NSDate date]]){
             [label setTextColor:[UIColor redColor]];
         }
+        
+        self.detailLabel = [[UILabel alloc] initWithFrame:(CGRect){{0, self.frame.size.height / 3 * 2},{self.frame.size.width, self.frame.size.height / 3}}];
+        [self addSubview:_detailLabel];
+        [_detailLabel setFont:[UIFont systemFontOfSize:12]];
+        [_detailLabel setTextAlignment:NSTextAlignmentCenter];
+        [_detailLabel setBackgroundColor:[UIColor clearColor]];
         _date = date;
+        _festival = [[[CLDateManager manager] festival:self.date] copy];
     }
     return self;
 }
 
 - (void)setShowChinese:(BOOL)showChinese{
-    if (showChinese){
-        if (!self.chineseLabel){
-            self.chineseLabel = [[UILabel alloc] initWithFrame:(CGRect){{0, self.frame.size.height / 3 * 2},{self.frame.size.width, self.frame.size.height / 3}}];
-            [self addSubview:_chineseLabel];
-            [_chineseLabel setText:[CLDateManager chineseDay:self.date.day_zh]];
-            [_chineseLabel setFont:[UIFont systemFontOfSize:12]];
-            [_chineseLabel setTextAlignment:NSTextAlignmentCenter];
-            [_chineseLabel setBackgroundColor:[UIColor clearColor]];
-        }else{
-            [self.chineseLabel setHidden:NO];
-        }
+    if (showChinese && (!self.showFestival || (self.showFestival && !_festival))){
+        [self.detailLabel setHidden:NO];
+        [_detailLabel setText:[CLDateManager chineseDay:self.date]];
     }else{
-        if (self.chineseLabel){
-            [self.chineseLabel setHidden:YES];
+        if (self.showFestival && _festival){
+            [self setShowFestival:self.showFestival];
+        }else{
+            [self.detailLabel setHidden:YES];
         }
     }
     [super setShowChinese:showChinese];
+}
+
+
+- (void)setShowFestival:(BOOL)showFestival{
+    [super setShowFestival:showFestival];
+    if (showFestival && _festival){
+        [self.detailLabel setHidden:NO];
+        [_detailLabel setText:_festival];
+    }else{
+        [self setShowChinese:self.showChinese];
+    }
 }
 
 

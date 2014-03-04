@@ -63,6 +63,13 @@
     [super setShowChinese:showChinese];
 }
 
+- (void)setShowFestival:(BOOL)showFestival{
+    [_calendarViews[0] setShowFestival:showFestival];
+    [_calendarViews[1] setShowFestival:showFestival];
+    [_calendarViews[2] setShowFestival:showFestival];
+    [super setShowFestival:showFestival];
+}
+
 - (void)clearView:(int)index{
     if (_calendarViews[index]){
         [_calendarViews[index] removeFromSuperview];
@@ -135,6 +142,7 @@
             }
         }
         [leftView setShowChinese:self.showChinese];
+        [leftView setShowFestival:self.showFestival];
         
     }else if (dir < 0){
         
@@ -158,6 +166,7 @@
             }
         }
         [rightView setShowChinese:self.showChinese];
+        [rightView setShowFestival:self.showFestival];
     }
     [_calendarViews[1] setFrame:(CGRect){{self.frame.size.width, 0},self.frame.size}];
     [_calendarViews[0] setFrame:(CGRect){{0, 0},self.frame.size}];

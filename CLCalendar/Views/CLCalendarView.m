@@ -79,6 +79,11 @@
     [super setShowChinese:showChinese];
 }
 
+- (void)setShowFestival:(BOOL)showFestival{
+    [self.conveyorView setShowFestival:showFestival];
+    [super setShowFestival:showFestival];
+}
+
 
 
 #pragma mark - CLCalendarViewDelegate

@@ -52,6 +52,13 @@
     [super setShowChinese:showChinese];
 }
 
+- (void)setShowFestival:(BOOL)showFestival{
+    for (CLDayView *dayView in self.dayViews){
+        [dayView setShowFestival:showFestival];
+    }
+    [super setShowFestival:showFestival];
+}
+
 - (void)drawWeekDay{
     float left = 0;
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];

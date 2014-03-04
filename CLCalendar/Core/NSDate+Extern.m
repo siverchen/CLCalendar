@@ -15,40 +15,47 @@ NSString *NSStringFromCLDate(CLDate date){
 
 @implementation NSDate (Extern)
 
-- (NSInteger)year{
+- (NSUInteger)year{
     NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
     NSUInteger unitFlags = NSYearCalendarUnit;
     NSDateComponents *components = [calendar components:unitFlags fromDate:self];
     return [components year];
 }
 
-- (NSInteger)month{
+- (NSUInteger)month{
     NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
     NSUInteger unitFlags = NSMonthCalendarUnit;
     NSDateComponents *components = [calendar components:unitFlags fromDate:self];
     return [components month];
 }
 
-- (NSInteger)day{
+- (NSUInteger)day{
     NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
     NSUInteger unitFlags = NSDayCalendarUnit;
     NSDateComponents *components = [calendar components:unitFlags fromDate:self];
     return [components day];
 }
 
-- (NSInteger)weekDay{
+- (NSUInteger)weekDay{
     NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
     NSUInteger unitFlags = NSWeekdayCalendarUnit;
     NSDateComponents *components = [calendar components:unitFlags fromDate:self];
     return [components weekday];
 }
 
-- (NSInteger)day_zh{
+- (NSUInteger)day_zh{
     NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSChineseCalendar];
     NSUInteger unitFlags = NSDayCalendarUnit;
     NSDateComponents *components = [calendar components:unitFlags fromDate:self];
-    NSLog(@"%@", NSStringFromRange([calendar maximumRangeOfUnit:NSDayCalendarUnit]));
     return [components day];
+}
+
+
+- (NSUInteger)month_zh{
+    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSChineseCalendar];
+    NSUInteger unitFlags = NSMonthCalendarUnit;
+    NSDateComponents *components = [calendar components:unitFlags fromDate:self];
+    return [components month];
 }
 
 @end

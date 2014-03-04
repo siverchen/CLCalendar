@@ -13,14 +13,14 @@ UIKIT_EXTERN NSString *NSStringFromCLDate(CLDate date);
 @interface NSDate (Extern)
 
 
-- (NSInteger)year;
-- (NSInteger)month;
-- (NSInteger)day;
-- (NSInteger)weekDay;
+- (NSUInteger)year;
+- (NSUInteger)month;
+- (NSUInteger)day;
+- (NSUInteger)weekDay;
 
 
-- (NSInteger)year_zh;
-- (NSInteger)month_zh;
-- (NSInteger)day_zh;
+- (NSUInteger)year_zh;
+- (NSUInteger)month_zh;
+- (NSUInteger)day_zh;
 
 @end

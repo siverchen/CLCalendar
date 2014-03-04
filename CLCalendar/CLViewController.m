@@ -31,7 +31,11 @@
 }
 
 - (void)ShowChinese:(UISwitch *)s{
-    [calendarView setShowChinese:s.on];
+    if (s.tag == 2){
+        [calendarView setShowChinese:s.on];
+    }else{
+        [calendarView setShowFestival:s.on];
+    }
 }
 
 - (void)viewDidLoad
@@ -56,11 +60,31 @@
     
     UISwitch *s = [[UISwitch alloc] init];
     [s addTarget:self action:@selector(ShowChinese:) forControlEvents:UIControlEventValueChanged];
-    s.center = (CGPoint){160, 500};
+    s.center = (CGPoint){80, 510};
+    [s setTag:2];
     
-    [control setCenter:(CGPoint){160, 475}];
+    [control setCenter:(CGPoint){80, 485}];
     
     [self.view addSubview:s];
+    
+    
+    
+    
+    UILabel *control1 = [[UILabel alloc] initWithFrame:(CGRect){CGPointZero,{100, 50}}];
+    [control1 setTextAlignment:NSTextAlignmentCenter];
+    [control1 setText:@"显示节日"];
+    
+    [self.view addSubview:control1];
+    
+    
+    UISwitch *st = [[UISwitch alloc] init];
+    [st addTarget:self action:@selector(ShowChinese:) forControlEvents:UIControlEventValueChanged];
+    st.center = (CGPoint){240, 510};
+    [st setTag:1];
+    
+    [control1 setCenter:(CGPoint){240, 485}];
+    
+    [self.view addSubview:st];
     
     
 	// Do any additional setup after loading the view.

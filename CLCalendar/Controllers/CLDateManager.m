@@ -9,7 +9,126 @@
 #import "CLDateManager.h"
 #import "NSDate+Extern.h"
 
+@interface CLDateManager ()
+
+@property (nonatomic, strong) NSMutableDictionary *festivals;
+
+@end
+
 @implementation CLDateManager
+
+- (id)init{
+    if (self = [super init]){
+        self.festivals = [NSMutableDictionary dictionary];
+    }
+    return self;
+}
+
+
++ (instancetype)manager{
+    static CLDateManager *manager = nil;
+    if (!manager){
+        manager = [[CLDateManager alloc] init];
+    }
+    return manager;
+}
+
++ (NSDictionary *)AllFestival{
+    return @{
+            @"e-1-1" : @"元旦",
+            @"z-1-1" : @"春节",
+            @"z-1-15" : @"元宵节",
+            @"e-2-14" : @"情人节",
+            @"e-3-8" : @"妇女节",
+            @"e-3-12" : @"植树节",
+            @"e-4-1" : @"愚人节",
+            @"e-5-1" : @"劳动节",
+            @"e-5-4" : @"青年节",
+            @"s-e-5-2-7" : @"母亲节",
+            @"z-5-5" : @"端午节",
+            @"e-6-1" : @"儿童节",
+            @"s-e-6-3-7" : @"父亲节",
+            @"e-7-1" : @"建党",
+            @"z-7-7" : @"七夕",
+            @"e-8-1" : @"建军节",
+            @"z-8-15" : @"中秋节",
+            @"e-9-10" : @"教师节",
+            @"z-9-9" : @"重阳节",
+            @"e-10-1" : @"国庆节",
+            @"s-e-11-4-4" : @"感恩节",
+            @"e-12-5" : @"圣诞节",
+            @"s-z-12-e-1" : @"除夕"
+            };
+}
+
+
+- (NSString *)festival:(NSDate *)date{
+    
+    NSString *key = [NSString stringWithFormat:@"%lu-%lu", date.month, date.day];
+    NSString *year = [NSString stringWithFormat:@"e%lu", date.year];
+    NSMutableDictionary *f = [self.festivals objectForKey:year];
+    if (f && [f objectForKey:key]){
+        return [f objectForKey:key];
+    }else if (!f){
+        f = [NSMutableDictionary dictionary];
+        NSDictionary *all = [[self class] AllFestival];
+        for (NSString *skey in all){
+            NSArray *array = [skey componentsSeparatedByString:@"-"];
+            NSString *action = [array objectAtIndex:0];
+            char s = [action characterAtIndex:0];
+            if (s == 'e'){
+                NSString *mkey = [NSString stringWithFormat:@"%@-%@", [array objectAtIndex:1], [array objectAtIndex:2]];;
+                NSString *mvalue = [all objectForKey:skey];
+                if (mkey && mvalue){
+                    [f setValue:mvalue forKey:mkey];
+                }
+            }
+        }
+        [self.festivals setValue:f forKey:year];
+        if ([f objectForKey:key]){
+            return [f objectForKey:key];
+        }
+    }
+    
+    
+    key = [NSString stringWithFormat:@"%lu-%lu", date.month_zh, date.day_zh];
+    year = [NSString stringWithFormat:@"z%lu", date.year];
+    f = [self.festivals objectForKey:year];
+    if (f){
+        return [f objectForKey:key];
+    }else{
+        f = [NSMutableDictionary dictionary];
+        NSDictionary *all = [[self class] AllFestival];
+        for (NSString *skey in all){
+            NSArray *array = [skey componentsSeparatedByString:@"-"];
+            NSString *action = [array objectAtIndex:0];
+            char s = [action characterAtIndex:0];
+            if (s == 'z'){
+                NSString *mkey = [NSString stringWithFormat:@"%@-%@", [array objectAtIndex:1], [array objectAtIndex:2]];
+                NSString *mvalue = [all objectForKey:skey];
+                if (mkey && mvalue){
+                    [f setValue:mvalue forKey:mkey];
+                }
+            }
+        }
+        [self.festivals setValue:f forKey:year];
+        return [f objectForKey:key];
+    }
+    return nil;
+    
+}
+
+
++ (CLDate)gregorFromChinese:(CLDate)date{
+    NSCalendar *chineseCalendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSChineseCalendar];
+    NSDateComponents *components = [[NSDateComponents alloc] init];
+    [components setYear:date.year];
+    [components setMonth:date.month];
+    [components setDay:date.day];
+    NSDate *tdate = [chineseCalendar dateFromComponents:components];
+    return (CLDate){tdate.year, tdate.month, tdate.day};
+}
+
 
 
 + (NSUInteger)dayCount:(NSDate *)date{
@@ -144,9 +263,58 @@
     
 }
 
++ (NSString *)chineseMonth:(NSDate *)date{
+    NSString *m = nil;
+    switch (date.month_zh) {
+        case 1:
+            m = @"一";
+            break;
+        case 2:
+            m = @"二";
+            break;
+        case 3:
+            m = @"三";
+            break;
+        case 4:
+            m = @"四";
+            break;
+        case 5:
+            m = @"五";
+            break;
+        case 6:
+            m = @"六";
+            break;
+        case 7:
+            m = @"七";
+            break;
+        case 8:
+            m = @"八";
+            break;
+        case 9:
+            m = @"九";
+            break;
+        case 10:
+            m = @"十";
+            break;
+        case 11:
+            m = @"十一";
+            break;
+        case 12:
+            m = @"十二";
+            break;
+        default:
+            break;
+    }
+    return [m stringByAppendingString:@"月"];
+}
 
-+ (NSString *)chineseDay:(NSUInteger)day{
+
++ (NSString *)chineseDay:(NSDate *)date{
+    if (date.day_zh == 1){
+        return [self chineseMonth:date];
+    }
     NSString *prefix = nil;
+    NSUInteger day = date.day_zh;
     if (day <= 10){
         prefix = @"初";
     }else if (day > 10 && day < 20){
@@ -197,6 +365,7 @@
     return [NSString stringWithFormat:@"%@%@", prefix, subfix];
     
 }
+
 
 
 @end

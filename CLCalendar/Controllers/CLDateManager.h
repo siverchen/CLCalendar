@@ -11,6 +11,8 @@
 
 @interface CLDateManager : NSObject
 
++ (instancetype)manager;
+
 + (NSUInteger)dayCount:(NSDate *)date;
 
 + (NSDate *)firstMonthDay:(NSDate *)date;
@@ -28,6 +30,8 @@ isSameDayWithDate:(NSDate *)date;
 
 + (NSDate *)NSDateFromCLDate:(CLDate)date;
 
-+ (NSString *)chineseDay:(NSUInteger)day;
++ (NSString *)chineseDay:(NSDate *)date;
+
+- (NSString *)festival:(NSDate *)date;
 
 @end
