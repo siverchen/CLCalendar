@@ -13,11 +13,13 @@
 
 #define CL_DAYVIEW_WIDTH (320 / 7)
 #define CL_DAYVIEW_HEIGHT 60
+#define CL_WEEKVIEW_HEIGHT 30
 
 @interface CLMonthView ()
 
 @property (nonatomic, strong) NSMutableArray *dayViews;
 @property (nonatomic, strong) CLDayView *selectDayView;
+@property (nonatomic, strong) UIView *weekView;
 
 
 @end
@@ -35,9 +37,28 @@
     if (self) {
         _date = date;
         self.dayViews = [NSMutableArray array];
+        self.weekView = [[UIView alloc] initWithFrame:(CGRect){CGPointZero, {self.frame.size.width, CL_WEEKVIEW_HEIGHT}}];
+        [self addSubview:_weekView];
+        [self drawWeekDay];
         [self drawDates];
     }
     return self;
+}
+
+- (void)drawWeekDay{
+    float left = 0;
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    
+    for (NSString *symbol in [dateFormatter veryShortWeekdaySymbols]){
+        UILabel *label = [[UILabel alloc] initWithFrame:(CGRect){{left, 0}, {CL_DAYVIEW_WIDTH, CL_WEEKVIEW_HEIGHT}}];
+        [label setTextAlignment:NSTextAlignmentCenter];
+        [label setText:symbol];
+        [label setFont:[UIFont systemFontOfSize:12]];
+        [self.weekView addSubview:label];
+        left += CL_DAYVIEW_WIDTH;
+    }
+    
+    
 }
 
 - (void)drawDates{
@@ -47,7 +68,7 @@
     [self.dayViews removeAllObjects];
     int weekDay = (int)[self.date weekDay];
     float left = (weekDay - 1) * CL_DAYVIEW_WIDTH;
-    float top = 0;
+    float top = CL_WEEKVIEW_HEIGHT;
     
     NSUInteger count = [CLDateManager dayCount:self.date];
     NSDate *date = self.date;
