@@ -16,6 +16,7 @@
 
 @interface CLCalendarView : CLCalendarBaseView
 
+
 /**
  *	@brief	获取当前显示的日期
  *
@@ -29,6 +30,15 @@
  *	@param 	date 	目标日期: Year, month, day, weekday
  */
 - (void)selectDate:(CLDate)date;
+
+
+/**
+ *	@brief	是否显示农历
+ *
+ *	@param 	show 	YES 显示
+ */
+- (void)showChineseDate:(BOOL)show;
+
 
 
 

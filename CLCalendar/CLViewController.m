@@ -12,7 +12,9 @@
 #import "CLCalendarView.h"
 #import "NSDate+Extern.h"
 
-@interface CLViewController ()
+@interface CLViewController () {
+    CLCalendarView *calendarView;
+}
 
 @end
 
@@ -28,16 +30,38 @@
     return self;
 }
 
+- (void)ShowChinese:(UISwitch *)s{
+    [calendarView showChineseDate:s.on];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 
-    CLCalendarView *calendarView = [[CLCalendarView alloc] initWithDate:[NSDate date] andFrame:self.view.bounds];
+    calendarView = [[CLCalendarView alloc] initWithDate:[NSDate date] andFrame:self.view.bounds];
     [self.view addSubview:calendarView];
     
     
     
-    [calendarView selectDate:(CLDate){2011,10,1}];
+//    [calendarView selectDate:(CLDate){2014,4,19}];
+    
+    NSLog(@"%@", NSStringFromCLDate(calendarView.current));
+    
+    UILabel *control = [[UILabel alloc] initWithFrame:(CGRect){CGPointZero,{100, 50}}];
+    [control setTextAlignment:NSTextAlignmentCenter];
+    [control setText:@"显示农历"];
+    
+    [self.view addSubview:control];
+    
+    
+    UISwitch *s = [[UISwitch alloc] init];
+    [s addTarget:self action:@selector(ShowChinese:) forControlEvents:UIControlEventValueChanged];
+    s.center = (CGPoint){160, 500};
+    
+    [control setCenter:(CGPoint){160, 475}];
+    
+    [self.view addSubview:s];
+    
     
 	// Do any additional setup after loading the view.
 }

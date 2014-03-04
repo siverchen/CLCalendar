@@ -13,7 +13,8 @@
 #import "NSDate+Extern.h"
 #import "CLDateManager.h"
 
-@interface CLCalendarView () <CLConveyorViewDelegate>
+@interface CLCalendarView () <CLConveyorViewDelegate> {
+}
 
 @property (nonatomic, strong) CLCalendarHeaderView *headerView;
 @property (nonatomic, strong) CLConveyorView *conveyorView;
@@ -59,6 +60,7 @@
     NSDate *sdate = [CLDateManager NSDateFromCLDate:date];
     [self.headerView setDate:sdate];
     [self.conveyorView selectDate:sdate];
+    _date = sdate;
 }
 
 - (CLDate)current{
@@ -66,9 +68,16 @@
         self.date.year,
         self.date.month,
         self.date.day,
-        self.date.weekDay
+        self.date.weekDay,
+        self.date.day_zh
     };
     return date;
+}
+
+- (void)showChineseDate:(BOOL)show{
+    if (show != self.conveyorView.showChinese){
+        [self.conveyorView setShowChinese:show];
+    }
 }
 
 

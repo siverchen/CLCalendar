@@ -18,4 +18,9 @@ UIKIT_EXTERN NSString *NSStringFromCLDate(CLDate date);
 - (NSInteger)day;
 - (NSInteger)weekDay;
 
+
+- (NSInteger)year_zh;
+- (NSInteger)month_zh;
+- (NSInteger)day_zh;
+
 @end

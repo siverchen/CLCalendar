@@ -28,5 +28,6 @@ isSameDayWithDate:(NSDate *)date;
 
 + (NSDate *)NSDateFromCLDate:(CLDate)date;
 
++ (NSString *)chineseDay:(NSUInteger)day;
 
 @end

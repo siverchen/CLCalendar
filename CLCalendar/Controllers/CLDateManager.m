@@ -145,4 +145,58 @@
 }
 
 
++ (NSString *)chineseDay:(NSUInteger)day{
+    NSString *prefix = nil;
+    if (day <= 10){
+        prefix = @"初";
+    }else if (day > 10 && day < 20){
+        prefix = @"十";
+    }else if (day == 20){
+        prefix = @"二";
+    }else if (day > 20 && day < 30){
+        prefix = @"廿";
+    }else{
+        prefix = @"三";
+    }
+    NSString *subfix = nil;
+    switch (day % 10) {
+        case 1:
+            subfix = @"一";
+            break;
+        case 2:
+            subfix = @"二";
+            break;
+        case 3:
+            subfix = @"三";
+            break;
+        case 4:
+            subfix = @"四";
+            break;
+        case 5:
+            subfix = @"五";
+            break;
+        case 6:
+            subfix = @"六";
+            break;
+        case 7:
+            subfix = @"七";
+            break;
+        case 8:
+            subfix = @"八";
+            break;
+        case 9:
+            subfix = @"九";
+            break;
+        case 0:
+            subfix = @"十";
+            break;
+        default:
+            break;
+    }
+    
+    return [NSString stringWithFormat:@"%@%@", prefix, subfix];
+    
+}
+
+
 @end

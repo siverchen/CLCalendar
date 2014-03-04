@@ -23,6 +23,8 @@
 
 @implementation CLConveyorView
 
+@synthesize date = _date;
+
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
@@ -49,8 +51,16 @@
         _calendarViews[0] = _calendarViews[1] = _calendarViews[2] = nil;
         [self addSubview:_scrollView];
         [self setCenterDate:date];
+        self.date = date;
     }
     return self;
+}
+
+- (void)setShowChinese:(BOOL)showChinese{
+    if (showChinese != _showChinese){
+        _showChinese = showChinese;
+        [self setCenterDate:self.date];
+    }
 }
 
 - (void)clearView:(int)index{
@@ -67,7 +77,7 @@
     [self clearView:2];
     //初始化左侧的月份
     NSDate *lastMonth = [CLDateManager lastMonth:date];
-    CLMonthView *leftView = [[CLMonthView alloc] initWithDate:lastMonth andFrame:self.bounds];
+    CLMonthView *leftView = [[CLMonthView alloc] initWithDate:lastMonth andFrame:self.bounds showChinese:_showChinese];
     [self.scrollView addSubview:leftView];
     leftView.delegate = self;
     [leftView setFrame:(CGRect){{0, 0},self.frame.size}];
@@ -75,7 +85,7 @@
     
     //初始化中间的月份
     NSDate *currentMonth = [CLDateManager currentMonth:date];
-    CLMonthView *centerView = [[CLMonthView alloc] initWithDate:currentMonth andFrame:self.bounds];
+    CLMonthView *centerView = [[CLMonthView alloc] initWithDate:currentMonth andFrame:self.bounds showChinese:_showChinese];
     [self.scrollView addSubview:centerView];
     [centerView setFrame:(CGRect){{self.frame.size.width, 0},self.frame.size}];
     centerView.delegate = self;
@@ -83,7 +93,7 @@
     
     //初始化右侧的月份
     NSDate *nextMonth = [CLDateManager nextMonth:date];
-    CLMonthView *rightView = [[CLMonthView alloc] initWithDate:nextMonth andFrame:self.bounds];
+    CLMonthView *rightView = [[CLMonthView alloc] initWithDate:nextMonth andFrame:self.bounds showChinese:_showChinese];
     [self.scrollView addSubview:rightView];
     rightView.date = nextMonth;
     [rightView setFrame:(CGRect){{self.frame.size.width * 2, 0},self.frame.size}];

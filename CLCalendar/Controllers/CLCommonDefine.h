@@ -16,6 +16,9 @@ struct CLDate{
     NSUInteger month;
     NSUInteger day;
     NSUInteger weekday;
+    NSUInteger zh_day;
+    NSUInteger zh_month;
+    NSUInteger zh_year;
 };
 
 typedef struct CLDate CLDate;

@@ -38,5 +38,14 @@
     return self;
 }
 
+- (void)showChinese{
+    UILabel *label = [[UILabel alloc] initWithFrame:(CGRect){{0, self.frame.size.height / 3 * 2},{self.frame.size.width, self.frame.size.height / 3}}];
+    [self addSubview:label];
+    [label setText:[CLDateManager chineseDay:self.date.day_zh]];
+    [label setFont:[UIFont systemFontOfSize:12]];
+    [label setTextAlignment:NSTextAlignmentCenter];
+    [label setBackgroundColor:[UIColor clearColor]];
+}
+
 
 @end
