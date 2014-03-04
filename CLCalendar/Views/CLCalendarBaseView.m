@@ -26,6 +26,12 @@
     return self;
 }
 
+- (void)setShowChinese:(BOOL)showChinese{
+    _showChinese = showChinese;
+}
+
+
+
 /*
 // Only override drawRect: if you perform custom drawing.
 // An empty implementation adversely affects performance during animation.

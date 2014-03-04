@@ -31,7 +31,7 @@
 }
 
 - (void)ShowChinese:(UISwitch *)s{
-    [calendarView showChineseDate:s.on];
+    [calendarView setShowChinese:s.on];
 }
 
 - (void)viewDidLoad

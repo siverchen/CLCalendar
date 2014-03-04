@@ -15,9 +15,7 @@
 #define CL_DAYVIEW_HEIGHT 60
 #define CL_WEEKVIEW_HEIGHT 30
 
-@interface CLMonthView () {
-    BOOL _showChinese;
-}
+@interface CLMonthView ()
 
 @property (nonatomic, strong) NSMutableArray *dayViews;
 @property (nonatomic, strong) CLDayView *selectDayView;
@@ -37,7 +35,6 @@
 - (id)initWithDate:(NSDate *)date andFrame:(CGRect)frame{
     self = [super initWithFrame:frame];
     if (self) {
-        _showChinese = NO;
         _date = date;
         self.dayViews = [NSMutableArray array];
         self.weekView = [[UIView alloc] initWithFrame:(CGRect){CGPointZero, {self.frame.size.width, CL_WEEKVIEW_HEIGHT}}];
@@ -48,21 +45,12 @@
     return self;
 }
 
-- (id)initWithDate:(NSDate *)date andFrame:(CGRect)frame showChinese:(BOOL)show{
-    self = [super initWithFrame:frame];
-    if (self) {
-        _showChinese = show;
-        _date = date;
-        self.dayViews = [NSMutableArray array];
-        self.weekView = [[UIView alloc] initWithFrame:(CGRect){CGPointZero, {self.frame.size.width, CL_WEEKVIEW_HEIGHT}}];
-        [self addSubview:_weekView];
-        [self drawWeekDay];
-        [self drawDates];
+- (void)setShowChinese:(BOOL)showChinese{
+    for (CLDayView *dayView in self.dayViews){
+        [dayView setShowChinese:showChinese];
     }
-    return self;
+    [super setShowChinese:showChinese];
 }
-
-
 
 - (void)drawWeekDay{
     float left = 0;
@@ -98,9 +86,6 @@
         }
         CLDayView *dayView = [[CLDayView alloc] initWithDate:date andFrame:(CGRect){{left, top}, {CL_DAYVIEW_WIDTH, CL_DAYVIEW_HEIGHT}}];
         date = [NSDate dateWithTimeInterval:24 * 60 * 60 sinceDate:date] ;
-        if (_showChinese){
-            [dayView showChinese];
-        }
         [self addSubview:dayView];
         left += CL_DAYVIEW_WIDTH;
         [self.dayViews addObject:dayView];

@@ -11,7 +11,10 @@
 @interface CLCalendarBaseView : UIControl
 
 @property (nonatomic, strong) NSDate *date;
+@property (nonatomic, assign) BOOL showChinese;
+@property (nonatomic, assign) BOOL showFestival;
 
 - (id)initWithDate:(NSDate *)date andFrame:(CGRect)frame;
+
 
 @end

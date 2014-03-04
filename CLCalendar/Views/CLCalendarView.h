@@ -32,13 +32,6 @@
 - (void)selectDate:(CLDate)date;
 
 
-/**
- *	@brief	是否显示农历
- *
- *	@param 	show 	YES 显示
- */
-- (void)showChineseDate:(BOOL)show;
-
 
 
 

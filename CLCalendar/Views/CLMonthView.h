@@ -16,8 +16,6 @@
 
 @property (nonatomic, unsafe_unretained) id <CLMonthViewDelegate> delegate;
 
-- (id)initWithDate:(NSDate *)date andFrame:(CGRect)frame showChinese:(BOOL)show;
-
 - (CLDayView *)selectDate:(NSDate *)date;
 
 @end

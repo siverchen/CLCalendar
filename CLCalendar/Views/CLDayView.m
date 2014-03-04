@@ -10,6 +10,12 @@
 #import "CLDateManager.h"
 #import "NSDate+Extern.h"
 
+@interface CLDayView ()
+
+@property (nonatomic, strong) UILabel *chineseLabel;
+
+@end
+
 @implementation CLDayView
 
 @synthesize date = _date;
@@ -38,13 +44,24 @@
     return self;
 }
 
-- (void)showChinese{
-    UILabel *label = [[UILabel alloc] initWithFrame:(CGRect){{0, self.frame.size.height / 3 * 2},{self.frame.size.width, self.frame.size.height / 3}}];
-    [self addSubview:label];
-    [label setText:[CLDateManager chineseDay:self.date.day_zh]];
-    [label setFont:[UIFont systemFontOfSize:12]];
-    [label setTextAlignment:NSTextAlignmentCenter];
-    [label setBackgroundColor:[UIColor clearColor]];
+- (void)setShowChinese:(BOOL)showChinese{
+    if (showChinese){
+        if (!self.chineseLabel){
+            self.chineseLabel = [[UILabel alloc] initWithFrame:(CGRect){{0, self.frame.size.height / 3 * 2},{self.frame.size.width, self.frame.size.height / 3}}];
+            [self addSubview:_chineseLabel];
+            [_chineseLabel setText:[CLDateManager chineseDay:self.date.day_zh]];
+            [_chineseLabel setFont:[UIFont systemFontOfSize:12]];
+            [_chineseLabel setTextAlignment:NSTextAlignmentCenter];
+            [_chineseLabel setBackgroundColor:[UIColor clearColor]];
+        }else{
+            [self.chineseLabel setHidden:NO];
+        }
+    }else{
+        if (self.chineseLabel){
+            [self.chineseLabel setHidden:YES];
+        }
+    }
+    [super setShowChinese:showChinese];
 }
 
 

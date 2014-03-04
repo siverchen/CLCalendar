@@ -57,10 +57,10 @@
 }
 
 - (void)setShowChinese:(BOOL)showChinese{
-    if (showChinese != _showChinese){
-        _showChinese = showChinese;
-        [self setCenterDate:self.date];
-    }
+    [_calendarViews[0] setShowChinese:showChinese];
+    [_calendarViews[1] setShowChinese:showChinese];
+    [_calendarViews[2] setShowChinese:showChinese];
+    [super setShowChinese:showChinese];
 }
 
 - (void)clearView:(int)index{
@@ -77,7 +77,7 @@
     [self clearView:2];
     //初始化左侧的月份
     NSDate *lastMonth = [CLDateManager lastMonth:date];
-    CLMonthView *leftView = [[CLMonthView alloc] initWithDate:lastMonth andFrame:self.bounds showChinese:_showChinese];
+    CLMonthView *leftView = [[CLMonthView alloc] initWithDate:lastMonth andFrame:self.bounds];
     [self.scrollView addSubview:leftView];
     leftView.delegate = self;
     [leftView setFrame:(CGRect){{0, 0},self.frame.size}];
@@ -85,7 +85,7 @@
     
     //初始化中间的月份
     NSDate *currentMonth = [CLDateManager currentMonth:date];
-    CLMonthView *centerView = [[CLMonthView alloc] initWithDate:currentMonth andFrame:self.bounds showChinese:_showChinese];
+    CLMonthView *centerView = [[CLMonthView alloc] initWithDate:currentMonth andFrame:self.bounds];
     [self.scrollView addSubview:centerView];
     [centerView setFrame:(CGRect){{self.frame.size.width, 0},self.frame.size}];
     centerView.delegate = self;
@@ -93,7 +93,7 @@
     
     //初始化右侧的月份
     NSDate *nextMonth = [CLDateManager nextMonth:date];
-    CLMonthView *rightView = [[CLMonthView alloc] initWithDate:nextMonth andFrame:self.bounds showChinese:_showChinese];
+    CLMonthView *rightView = [[CLMonthView alloc] initWithDate:nextMonth andFrame:self.bounds];
     [self.scrollView addSubview:rightView];
     rightView.date = nextMonth;
     [rightView setFrame:(CGRect){{self.frame.size.width * 2, 0},self.frame.size}];
@@ -134,6 +134,7 @@
                 self.selectDayView = newSelectView;
             }
         }
+        [leftView setShowChinese:self.showChinese];
         
     }else if (dir < 0){
         
@@ -156,6 +157,7 @@
                 self.selectDayView = newSelectView;
             }
         }
+        [rightView setShowChinese:self.showChinese];
     }
     [_calendarViews[1] setFrame:(CGRect){{self.frame.size.width, 0},self.frame.size}];
     [_calendarViews[0] setFrame:(CGRect){{0, 0},self.frame.size}];

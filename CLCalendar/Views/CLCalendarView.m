@@ -74,10 +74,9 @@
     return date;
 }
 
-- (void)showChineseDate:(BOOL)show{
-    if (show != self.conveyorView.showChinese){
-        [self.conveyorView setShowChinese:show];
-    }
+- (void)setShowChinese:(BOOL)showChinese{
+    [self.conveyorView setShowChinese:showChinese];
+    [super setShowChinese:showChinese];
 }
 
 

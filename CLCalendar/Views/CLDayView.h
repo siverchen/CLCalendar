@@ -12,6 +12,5 @@
 
 @interface CLDayView : CLCalendarBaseView
 
-- (void)showChinese;
 
 @end

@@ -15,7 +15,6 @@
 @interface CLConveyorView : CLCalendarBaseView
 
 @property (nonatomic, unsafe_unretained) id <CLConveyorViewDelegate> delegate;
-@property (nonatomic, assign) BOOL showChinese;
 
 - (void)setCenterDate:(NSDate *)date;
 
