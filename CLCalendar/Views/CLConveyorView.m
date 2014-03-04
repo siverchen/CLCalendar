@@ -119,7 +119,10 @@
         leftView.date = [CLDateManager nextMonth:rightView.date];
         
         if (_selectDayView){
-            [leftView selectDate:_selectDayView.date];
+            CLDayView *newSelectView = [leftView selectDate:_selectDayView.date];
+            if (newSelectView){
+                self.selectDayView = newSelectView;
+            }
         }
         
     }else if (dir < 0){
@@ -138,7 +141,10 @@
         rightView.date = [CLDateManager lastMonth:leftView.date];
         
         if (_selectDayView){
-            [rightView selectDate:_selectDayView.date];
+            CLDayView *newSelectView = [rightView selectDate:_selectDayView.date];
+            if (newSelectView){
+                self.selectDayView = newSelectView;
+            }
         }
     }
     [_calendarViews[1] setFrame:(CGRect){{self.frame.size.width, 0},self.frame.size}];
