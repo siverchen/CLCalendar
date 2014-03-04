@@ -37,7 +37,7 @@
     
     
     
-    [calendarView selectDate:(CLDate){2011,10,1,0}];
+    [calendarView selectDate:(CLDate){2011,10,1}];
     
 	// Do any additional setup after loading the view.
 }

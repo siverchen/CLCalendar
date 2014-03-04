@@ -103,7 +103,8 @@
 + (NSDate *)currentMonth:(NSDate *)date{
     
     NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
-    NSUInteger unitFlags = NSYearCalendarUnit | NSMonthCalendarUnit;
+    calendar.firstWeekday = 4;
+    NSUInteger unitFlags = NSYearCalendarUnit | NSMonthCalendarUnit | NSWeekdayCalendarUnit;
     NSDateComponents *components = [calendar components:unitFlags fromDate:date];
     [components setDay:1];
     [components setHour:0];

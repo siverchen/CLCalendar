@@ -8,9 +8,20 @@
 
 #import "CLCalendarBaseView.h"
 
+@class CLDayView;
+
+@protocol CLMonthViewDelegate;
 
 @interface CLMonthView : CLCalendarBaseView
 
-- (void)selectDate:(NSDate *)date;
+@property (nonatomic, unsafe_unretained) id <CLMonthViewDelegate> delegate;
+
+- (CLDayView *)selectDate:(NSDate *)date;
+
+@end
+
+@protocol CLMonthViewDelegate <NSObject>
+
+- (void)monthView:(CLMonthView *)monthView selectDayView:(CLDayView *)dayView;
 
 @end

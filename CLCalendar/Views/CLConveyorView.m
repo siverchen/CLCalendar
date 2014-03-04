@@ -8,14 +8,16 @@
 
 #import "CLConveyorView.h"
 #import "CLDateManager.h"
+#import "CLMonthView.h"
+#import "CLDayView.h"
 
 
-
-@interface CLConveyorView () <UIScrollViewDelegate> {
+@interface CLConveyorView () <UIScrollViewDelegate, CLMonthViewDelegate> {
     CLMonthView *_calendarViews[3];
 }
 
 @property (nonatomic, strong) UIScrollView *scrollView;
+@property (nonatomic, strong) CLDayView *selectDayView;
 
 @end
 
@@ -67,6 +69,7 @@
     NSDate *lastMonth = [CLDateManager lastMonth:date];
     CLMonthView *leftView = [[CLMonthView alloc] initWithDate:lastMonth andFrame:self.bounds];
     [self.scrollView addSubview:leftView];
+    leftView.delegate = self;
     [leftView setFrame:(CGRect){{0, 0},self.frame.size}];
     _calendarViews[0] = leftView;
     
@@ -75,6 +78,7 @@
     CLMonthView *centerView = [[CLMonthView alloc] initWithDate:currentMonth andFrame:self.bounds];
     [self.scrollView addSubview:centerView];
     [centerView setFrame:(CGRect){{self.frame.size.width, 0},self.frame.size}];
+    centerView.delegate = self;
     _calendarViews[1] = centerView;
     
     //初始化右侧的月份
@@ -83,13 +87,17 @@
     [self.scrollView addSubview:rightView];
     rightView.date = nextMonth;
     [rightView setFrame:(CGRect){{self.frame.size.width * 2, 0},self.frame.size}];
+    rightView.delegate = self;
     _calendarViews[2] = rightView;
     rightView.date = nextMonth;
 }
 
 - (void)selectDate:(NSDate *)date{
     [self setCenterDate:date];
-    [_calendarViews[1] selectDate:date];
+    CLDayView *dayView = [_calendarViews[1] selectDate:date];
+    if (dayView){
+        self.selectDayView = dayView;
+    }
 }
 
 - (void)resetPosition:(int)dir{
@@ -110,6 +118,10 @@
         //设置date
         leftView.date = [CLDateManager nextMonth:rightView.date];
         
+        if (_selectDayView){
+            [leftView selectDate:_selectDayView.date];
+        }
+        
     }else if (dir < 0){
         
         [self addSubview:leftView];
@@ -124,6 +136,10 @@
         
         //设置date
         rightView.date = [CLDateManager lastMonth:leftView.date];
+        
+        if (_selectDayView){
+            [rightView selectDate:_selectDayView.date];
+        }
     }
     [_calendarViews[1] setFrame:(CGRect){{self.frame.size.width, 0},self.frame.size}];
     [_calendarViews[0] setFrame:(CGRect){{0, 0},self.frame.size}];
@@ -142,11 +158,19 @@
     }else if (scrollView.contentOffset.x == 2 * scrollView.frame.size.width){
         [self resetPosition:1];
     }
-    
     if (_delegate && [_delegate respondsToSelector:@selector(conveyorView:SelectMonth:)]){
         [_delegate conveyorView:self SelectMonth:self.date];
     }
-    NSLog(@"%@", self.date);
+}
+
+
+
+- (void)monthView:(CLMonthView *)monthView selectDayView:(CLDayView *)dayView{
+    if (_selectDayView){
+        [_selectDayView setBackgroundColor:[UIColor clearColor]];
+    }
+    [dayView setBackgroundColor:CLRGBA(157, 195, 231, 1)];
+    self.selectDayView = dayView;
 }
 
 

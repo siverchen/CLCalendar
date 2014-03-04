@@ -17,6 +17,7 @@
 @interface CLMonthView ()
 
 @property (nonatomic, strong) NSMutableArray *dayViews;
+@property (nonatomic, strong) CLDayView *selectDayView;
 
 
 @end
@@ -24,6 +25,10 @@
 @implementation CLMonthView
 
 @synthesize date = _date;
+
+- (void)dealloc{
+    _delegate = nil;
+}
 
 - (id)initWithDate:(NSDate *)date andFrame:(CGRect)frame{
     self = [super initWithFrame:frame];
@@ -56,15 +61,18 @@
         [self addSubview:dayView];
         left += CL_DAYVIEW_WIDTH;
         [self.dayViews addObject:dayView];
+        [dayView addTarget:self action:@selector(selectDay:) forControlEvents:UIControlEventTouchUpInside];
     }
 }
 
-- (void)selectDate:(NSDate *)date{
+- (CLDayView *)selectDate:(NSDate *)date{
     for (CLDayView *dayView in [self dayViews]){
         if ([CLDateManager Date:date isSameDayWithDate:dayView.date]){
             [dayView setBackgroundColor:CLRGBA(157, 195, 231, 1)];
+            return dayView;
         }
     }
+    return nil;
 }
 
 
@@ -75,7 +83,9 @@
 
 
 - (void)selectDay:(CLDayView *)dayView{
-    NSLog(@"%@", dayView.date);
+    if (_delegate && [_delegate respondsToSelector:@selector(monthView:selectDayView:)]){
+        [_delegate monthView:self selectDayView:dayView];
+    }
 }
 
 
